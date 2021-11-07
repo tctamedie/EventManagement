@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <h2>
+                <span id="pageHeader"></span>
+
+            </h2>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <ul class="breadcrumb float-md-right" id="breadcrumb">
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Vertical Layout -->
+<form method="post" id="createForm">
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2><strong id="recordHeader">Record</strong> Form</h2>
+                </div>
+                <div class="body" id="user-interface">
+                </div>
+                <div class="footer">
+                    <div class="row box-clear">
+                        <div class="col-md-12 box-clear" id="progressLoader" style="display:none">
+                            <img src="../images/loader.gif" class="processing-image" alt="" />
+                        </div>
+                        <div class="col-md-12 box-clear text-right">
+                           
+                            <button type="submit" id="btnSave" class="btn btn-default btn-sm">
+                                <i class="fa fa-plus-square-o"></i>&nbsp; Save
+                            </button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- #END# Vertical Layout -->
+</form>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $(function () {
+            createInterface("Create");
+        })
+        function createInterface(action) {
+            var path = window.location.pathname.split("/");
+            path = path.filter(s => s !== "");
+            var url = "/" + path[0] + "/GetFormModel";
+            DoAjax(url, "GET", { id: path[3], filterColumn:"" }, null,
+                function (data) {
+                    createTabs(data, null, action);
+                    LockForm(action, data, data.idColumn);
+                    CreateNavigation(data.header, action, path[0], path[1], path[3]);
+                    UpdateControlPanel(null);
+                    $("#pageHeader").text(data.header);
+                    $("#recordHeader").text(data.header);
+                    $("#createForm").attr("action", "/" + path[0] +"/Create" );
+                    console.log(data)
+                }, function (error) { })
+        }
+
+    </script>
+}

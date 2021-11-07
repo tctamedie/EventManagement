@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <h2>
+                <span id="pageHeader"></span>
+
+            </h2>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <ul class="breadcrumb float-md-right" id="breadcrumb">
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Vertical Layout -->
+<div class="row clearfix">
+    <div class="col-lg-8 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="header">
+                <h2><strong id="recordHeader">Record</strong> Information</h2>
+            </div>
+            <div class="body" id="user-interface">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="header">
+                <h2><strong>Audit</strong> Information</h2>
+            </div>
+            <div class="body">
+
+                <table class="table table-bordered table-hover" id="audit-log">
+                    <tr>
+                        <td width="30%"><small>Created By:</small></td>
+                        <td id="createBy"><small>System</small></td>
+                    </tr>
+                    <tr>
+                        <td width="30%"><small>Modified By:</small></td>
+                        <td id="modifiedBy"><small>System</small></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #END# Vertical Layout -->
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $(function () {
+            createInterface("Delete");
+        })
+
+
+    </script>
+}
