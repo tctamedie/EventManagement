@@ -17,7 +17,7 @@ namespace Models
     {
         [Field(2,1)]
         public DateTime StartDate { get; set; }
-        [Field(2, 1)]
+        [Field(2, 2)]
         public DateTime EndDate { get; set; }
     }
 }

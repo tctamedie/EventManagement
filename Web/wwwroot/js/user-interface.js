@@ -39,7 +39,7 @@
         modal.append(tabs);
         modal.append(contents);
     }
-
+    LockForm(action, config, config.keyField);
 }
 function CreateForm(tab, data, record, action) {
 
@@ -47,12 +47,16 @@ function CreateForm(tab, data, record, action) {
     rows.forEach(row => {
         tab.append(CreateRow(row, record, action));
     });
+    
 }
 function CreateRow(row, record, action) {
     var hiddens = row.fields.filter(s => s.isHidden).length;
     var allFields = row.fields.length;
-    var style = hiddens === allFields ? "display:none" : "display:block";
-    var brow = $(`<div style=${style}></div>`).addClass("row form-control-row-spacer");
+    var brow = $(`<div></div>`).addClass("row form-control-row-spacer");
+    if (hiddens === allFields)
+    {
+        brow.attr("style", "display:none")
+    }
     var fields = row.fields.sort((a, b) => { return a.order - b.order });
     fields.forEach(field => {
         brow.append(CreateControl(field, record, action));
@@ -61,7 +65,10 @@ function CreateRow(row, record, action) {
 }
 function CreateControl(field, row, action) {
     var label = `lbl${field.id}`, style = field.hidden ? "display:none" : "display:block";
-    var column = $(`<div style=${style}></div>`).addClass("form-control-column-spacer col-md-" + field.width);
+    var column = $(`<div></div>`).addClass("form-control-column-spacer col-md-" + field.width);
+    if (field.controlType === "hidden") {
+        column.attr("style","display:none")
+    }
     var inputGroup = $("<div></div>").addClass("input-group");
     var requiredLabel = field.displayName + (field.isRequired ? " <span style='color:red'> *</span>" : "");
     var labelControl = $("<span></span>").addClass("input-group-addon").html(requiredLabel).attr("id", label);
@@ -73,7 +80,7 @@ function CreateControl(field, row, action) {
 }
 function CreateFormControl(field,row, action) {
     var datePickerClass = field.isDate ? " ui-datepicker" : "";
-    var type = field.type === "date" ? "text" : field.type;
+    var type = field.controlType === "date" ? "text" : field.controlType;
     var multipleSelect = field.multpleSelect ? "multiple" : "";
     var controlCss = `form-control input-sm${datePickerClass}`;
     if (field.type === "file") {
